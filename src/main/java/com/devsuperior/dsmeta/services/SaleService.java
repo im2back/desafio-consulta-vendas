@@ -10,6 +10,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.devsuperior.dsmeta.dto.RelatorioDTO;
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SumarioVendasPorVendedorDTO;
 import com.devsuperior.dsmeta.entities.Sale;
@@ -59,7 +60,7 @@ public class SaleService {
 		return dataFinal;
 	}
 
-	public void gerarRelatorio(String minDate, String maxDate, String name) {
+	public List<RelatorioDTO> gerarRelatorio(String minDate, String maxDate, String name) {
 		// TODO Auto-generated method stub
 		
 	}

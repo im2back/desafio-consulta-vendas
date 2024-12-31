@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devsuperior.dsmeta.dto.RelatorioDTO;
 import com.devsuperior.dsmeta.dto.SaleMinDTO;
 import com.devsuperior.dsmeta.dto.SumarioVendasPorVendedorDTO;
 import com.devsuperior.dsmeta.services.SaleService;
@@ -28,10 +29,10 @@ public class SaleController {
 	}
 
 	@GetMapping(value = "/report")
-	public ResponseEntity<?> getReport(@RequestParam(required = false) String minDate,
+	public ResponseEntity<List<RelatorioDTO>> getReport(@RequestParam(required = false) String minDate,
 			@RequestParam(required = false) String maxDate, @RequestParam(required = false) String name) {
-		service.gerarRelatorio(minDate,maxDate,name);
-		ResponseEntity.ok();
+		List<RelatorioDTO> response =  service.gerarRelatorio(minDate,maxDate,name);
+		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping(value = "/summary")
