@@ -31,13 +31,19 @@ public class SaleService {
 	}
 
 	public List<SumarioVendasPorVendedorDTO> gerarSumario(String minDateParam, String maxDateParam) {
-		LocalDate minDate =null;
-		LocalDate maxDate = null;
-		
-		maxDate = definirMaxDate(maxDateParam);
-		minDate = definirMinDate(minDateParam, maxDate);
+	
+		LocalDate maxDate = definirMaxDate(maxDateParam);
+		LocalDate minDate =definirMinDate(minDateParam, maxDate);
 		
 		return repository.getSummary(minDate, maxDate);
+	}
+	
+	public Page<RelatorioDTO> gerarRelatorio(String minDateParam, String maxDateParam, String name,Pageable pageable) {
+		
+		LocalDate maxDate = definirMaxDate(maxDateParam);
+		LocalDate minDate = definirMinDate(minDateParam, maxDate);
+		
+		return repository.gerarReport(minDate, maxDate,name,pageable);		
 	}
 	
 	private LocalDate definirMinDate(String minDateParam, LocalDate maxDate) {
@@ -58,16 +64,6 @@ public class SaleService {
 	        dataFinal = LocalDate.parse(maxDateParam, DateTimeFormatter.ISO_LOCAL_DATE);
 	    }
 		return dataFinal;
-	}
-
-	public Page<RelatorioDTO> gerarRelatorio(String minDateParam, String maxDateParam, String name,Pageable pageable) {
-		LocalDate minDate =null;
-		LocalDate maxDate = null;
-		
-		maxDate = definirMaxDate(maxDateParam);
-		minDate = definirMinDate(minDateParam, maxDate);
-		
-		return repository.gerarReport(minDate, maxDate,name,pageable);		
 	}
 	
 	
