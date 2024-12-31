@@ -3,6 +3,8 @@ package com.devsuperior.dsmeta.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -29,9 +31,9 @@ public class SaleController {
 	}
 
 	@GetMapping(value = "/report")
-	public ResponseEntity<List<RelatorioDTO>> getReport(@RequestParam(required = false) String minDate,
-			@RequestParam(required = false) String maxDate, @RequestParam(required = false) String name) {
-		List<RelatorioDTO> response =  service.gerarRelatorio(minDate,maxDate,name);
+	public ResponseEntity<Page<RelatorioDTO>> getReport(@RequestParam(required = false) String minDate,
+			@RequestParam(required = false) String maxDate, @RequestParam(required = false) String name,Pageable pageable) {
+		Page<RelatorioDTO> response =  service.gerarRelatorio(minDate,maxDate,name,pageable);
 		return ResponseEntity.ok(response);
 	}
 

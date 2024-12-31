@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.devsuperior.dsmeta.dto.RelatorioDTO;
@@ -38,33 +40,35 @@ public class SaleService {
 		return repository.getSummary(minDate, maxDate);
 	}
 	
-	private LocalDate definirMinDate(String minDate, LocalDate maxDate) {
-		LocalDate dataInicial;
-		// Define a dataInicial como um ano antes da dataFinal se for nula
-	    if (minDate == null) {
-	        dataInicial = maxDate.minusYears(1L);
+	private LocalDate definirMinDate(String minDateParam, LocalDate maxDate) {
+		LocalDate mindate;
+	    if (minDateParam == null) {
+	        mindate = maxDate.minusYears(1L);
 	    } else {
-	        dataInicial = LocalDate.parse(minDate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        mindate = LocalDate.parse(minDateParam, DateTimeFormatter.ISO_LOCAL_DATE);
 	    }
-		return dataInicial;
+		return mindate;
 	}
 
-	private LocalDate definirMaxDate(String maxDate) {
+	private LocalDate definirMaxDate(String maxDateParam) {
 		LocalDate dataFinal;
-		// Define a dataFinal como a data atual se for nula
-	    if (maxDate == null) {
+	    if (maxDateParam == null) {
 	        dataFinal = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
 	    } else {
-	        dataFinal = LocalDate.parse(maxDate, DateTimeFormatter.ISO_LOCAL_DATE);
+	        dataFinal = LocalDate.parse(maxDateParam, DateTimeFormatter.ISO_LOCAL_DATE);
 	    }
 		return dataFinal;
 	}
 
-	public List<RelatorioDTO> gerarRelatorio(String minDate, String maxDate, String name) {
-		// TODO Auto-generated method stub
+	public Page<RelatorioDTO> gerarRelatorio(String minDateParam, String maxDateParam, String name,Pageable pageable) {
+		LocalDate minDate =null;
+		LocalDate maxDate = null;
 		
+		maxDate = definirMaxDate(maxDateParam);
+		minDate = definirMinDate(minDateParam, maxDate);
+		
+		return repository.gerarReport(minDate, maxDate,name,pageable);		
 	}
-	
 	
 	
 }
