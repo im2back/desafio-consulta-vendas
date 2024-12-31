@@ -58,6 +58,11 @@ public class SaleService {
 	    }
 		return dataFinal;
 	}
+
+	public void gerarRelatorio(String minDate, String maxDate, String name) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 	
 	
